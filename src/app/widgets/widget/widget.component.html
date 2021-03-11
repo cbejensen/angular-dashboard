@@ -1,0 +1,6 @@
+<mat-card *ngIf="portal">
+  <ng-template [cdkPortalOutlet]="portal"></ng-template>
+  <mat-card-actions>
+    <button *ngIf="editing">Remove</button>
+  </mat-card-actions>
+</mat-card>
