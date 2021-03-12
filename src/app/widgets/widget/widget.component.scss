@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  .mat-card {
+    flex: 1;
+  }
+  &:empty {
+    display: none;
+  }
+}
+
+.mat-card-content {
+  &, & > ::ng-deep * {
+    height: 100%;
+  }
+}

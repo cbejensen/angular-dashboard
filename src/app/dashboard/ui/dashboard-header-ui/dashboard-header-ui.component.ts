@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Injector } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Injector, Input } from '@angular/core';
 
 @Component({
   selector: 'fx-dashboard-header-ui',
@@ -7,15 +7,13 @@ import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Injec
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardHeaderUiComponent implements OnInit {
+  @Input() editing: boolean | null = false;
+  
   @Output() toggleEditing = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
   }
-
-  i = Injector.create({
-    providers: []
-  })
 
 }

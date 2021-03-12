@@ -16,6 +16,7 @@ interface TodoListWidgetData extends WidgetData {
   templateUrl: './todo-list-widget.component.html',
   styleUrls: ['./todo-list-widget.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [TodoListService]
 })
 export class TodoListWidgetComponent
   implements AbstractWidgetComponent<TodoListWidgetData> {

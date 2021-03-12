@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+::ng-deep {
+  .fx-dashboard-header, .fx-dashboard-widget-list {
+    padding: 1rem;
+  }
+  .fx-dashboard-widget-list {
+    background: #5d5d5d;
+    flex: 1;
+  }
+}

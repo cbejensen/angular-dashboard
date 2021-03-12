@@ -2,12 +2,11 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { WidgetService } from 'src/app/widgets/widget.service';
 
 @Component({
-  selector: 'fx-dashboard-container',
-  templateUrl: './dashboard.container.html',
-  styleUrls: ['./dashboard.container.scss'],
+  templateUrl: './dashboard-page.component.html',
+  styleUrls: ['./dashboard-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardContainer {
+export class DashboardPageComponent {
 
   widgets = this.widgetService.getAllWidgets();
 

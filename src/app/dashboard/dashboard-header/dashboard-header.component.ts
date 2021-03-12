@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Output, Input } from '@angular/core';
 import { DashboardStore } from '../dashboard.store';
 
 @Component({
@@ -9,10 +9,10 @@ import { DashboardStore } from '../dashboard.store';
 })
 export class DashboardHeaderComponent {
 
+  editing = this.store.editing;
+
   constructor(private store: DashboardStore) { }
 
-  toggleEditing() {
-    this.store.toggleEditing();
-  }
+  toggleEditing = this.store.toggleEditing;
 
 }

@@ -19,9 +19,13 @@ import { WIDGET_COMPONENTS } from '../WIDGET_COMPONENTS';
 })
 export class WidgetComponent {
   @Input() set widget(widget: Widget) {
+    if (!widget) {
+      this.portal = undefined;
+      return;
+    }
     this.portal = createWidgetPortal(widget.name, widget.data);
-    this.colSpan = `span ${widget.colSpan}`;
-    this.rowSpan = `span ${widget.rowSpan}`;
+    this.colSpan = `span ${widget.colSpan || 1}`;
+    this.rowSpan = `span ${widget.rowSpan || 1}`;
   }
 
   // @Input() mutable: boolean = false;

@@ -1,3 +1,2 @@
-<fx-dashboard-header-ui (toggleEditing)="toggleEditing()">
-  <ng-content></ng-content>
-</fx-dashboard-header-ui>
+<h1><ng-content></ng-content></h1>
+<button mat-flat-button (click)="toggleEditing()">{{ (editing | async) ? 'Done' : 'Edit' }}</button>
