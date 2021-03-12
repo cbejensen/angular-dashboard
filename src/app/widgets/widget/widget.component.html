@@ -1,8 +1,6 @@
-<mat-card *ngIf="portal">
+<mat-card *ngIf="widget && portal">
+  <mat-card-title *ngIf="widget.label">{{ widget.label }}</mat-card-title>
   <div class="mat-card-content">
     <ng-template [cdkPortalOutlet]="portal"></ng-template>
   </div>
-  <mat-card-actions *ngIf="editing">
-    <button>Remove</button>
-  </mat-card-actions>
 </mat-card>

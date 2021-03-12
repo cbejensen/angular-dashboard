@@ -1,21 +1,48 @@
 import { InjectionToken, TemplateRef } from '@angular/core';
-import { WIDGET_COMPONENTS } from './WIDGET_COMPONENTS';
-
-export type WidgetName = 'HELLO_WORLD' | 'NUMBER' | 'TODO_LIST';
+import { widgetDictionary } from './widget-data';
+import { GridsterItem } from 'angular-gridster2';
 
 /**
- * The injection token used to pass data into a widget component.
+ * The injection token used to provide the widget dictionary.
  */
-export const WIDGET_DATA = new InjectionToken<any>('WidgetData');
+export const WIDGET_DICTIONARY = new InjectionToken<any>('WIDGET_DICTIONARY');
+
+/**
+ * The injection token used to provide data to a widget component.
+ */
+export const WIDGET_DATA = new InjectionToken<any>('WIDGET_DATA');
+
+/**
+ * Every possible widget name. These names have a 1:1 ratio with widget
+ * components; that is, each name can only be assigned to one component.
+ */
+export type WidgetName = 'HELLO_WORLD' | 'NUMBER' | 'TODO_LIST';
 
 /**
  * An arbitrary UI with a unique name, designed to be used in a grid.
  */
 export interface Widget<Name extends WidgetName = WidgetName> {
+  /**
+   * The unique name of the widget that should be rendered. Note that, although
+   * the name is unique to a specific widget component, that widget can be
+   * rendered multiple times.
+   */
   name: Name;
+
+  /**
+   * A custom label that overrides the widget component's label.
+   */
+  label?: string;
+
+  /**
+   * Where this widget should appear on the grid.
+   */
+  coordinates: Pick<GridsterItem, 'x' | 'y' | 'rows' | 'cols'>;
+
+  /**
+   * Any abstract data required by the component.
+   */
   data?: WidgetComponentData<Name> | undefined;
-  colSpan?: number;
-  rowSpan?: number;
 }
 
 /**
@@ -30,7 +57,7 @@ export type WidgetData = Record<string, any>;
 export type AllWidgets = { [Name in WidgetName]: Widget<Name> };
 
 /**
- * The interface that a widget can implement.
+ * The interface that every widget component should implement.
  */
 export interface AbstractWidgetComponent<Data extends WidgetData> {
   /**
@@ -55,21 +82,21 @@ export interface AbstractWidgetComponent<Data extends WidgetData> {
 }
 
 /**
- * Helper type for getting a widget component type from a widget name.
+ * Utility type for getting a widget component type from a widget name.
  */
 export type WidgetComponentType<
   Name extends WidgetName
-> = typeof WIDGET_COMPONENTS[Name];
+> = typeof widgetDictionary[Name]['component'];
 
 /**
- * Helper type for getting a widget component instance from a widget name.
+ * Utility type for getting a widget component instance from a widget name.
  */
 export type WidgetComponentInstance<Name extends WidgetName> = InstanceType<
   WidgetComponentType<Name>
 >;
 
 /**
- * Helper type for getting a widget's data type from a widget name.
+ * Utility type for getting a widget's data type from a widget name.
  */
 export type WidgetComponentData<
   Name extends WidgetName

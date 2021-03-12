@@ -1,3 +1,9 @@
-<fx-widget-list>
+<!-- <fx-widget-list>
   <fx-widget *ngFor="let widget of widgets | async" [widget]="widget"></fx-widget>
-</fx-widget-list>
+</fx-widget-list> -->
+
+<gridster [options]="options">
+  <gridster-item *ngFor="let widget of widgets | async" [item]="widget.coordinates" class="mat-elevation-z2">
+    <fx-widget [widget]="widget"></fx-widget>
+  </gridster-item>
+</gridster>

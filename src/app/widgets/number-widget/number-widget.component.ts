@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
-import { AbstractWidgetComponent, WIDGET_DATA } from '../widget-models';
+import { AbstractWidgetComponent } from '../widget-models';
+import { WIDGET_DATA } from '../widget-models';
+
 
 export interface NumberWidgetData {
   label: string;
@@ -13,6 +15,8 @@ export interface NumberWidgetData {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NumberWidgetComponent implements AbstractWidgetComponent<NumberWidgetData> {
+
+  label = 'Number'
 
   constructor(@Inject(WIDGET_DATA) public data: NumberWidgetData) { }
 

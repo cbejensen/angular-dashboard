@@ -3,11 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import {PortalModule} from '@angular/cdk/portal';
 import { ReactiveComponentModule } from '@ngrx/component';
 import { DragulaModule } from 'ng2-dragula';
+import { GridsterModule } from 'angular-gridster2';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 import { DashboardHeaderComponent } from './dashboard/dashboard-header/dashboard-header.component';
 import { DashboardHeaderDirective, DashboardWidgetListDirective } from './dashboard/directives';
 import { WidgetListComponent } from './widgets/widget-list/widget-list.component';
@@ -20,6 +22,8 @@ import { TodoListWidgetComponent } from './widgets/todo-list-widget/todo-list-wi
 import { DashboardComponent } from './dashboard/ui/dashboard/dashboard.component';
 import { WidgetDirective } from './widgets/directives';
 import { DashboardPageComponent } from './dashboard/dashboard-page/dashboard-page.component';
+import { WIDGET_DICTIONARY } from './widgets/widget-models';
+import { widgetDictionary } from './widgets/widget-data';
 
 @NgModule({
   declarations: [
@@ -43,11 +47,12 @@ import { DashboardPageComponent } from './dashboard/dashboard-page/dashboard-pag
     AppRoutingModule,
     BrowserAnimationsModule,
     MatCardModule,
+    MatButtonModule,
     PortalModule,
-    ReactiveComponentModule
-    // DragulaModule.forRoot()
+    ReactiveComponentModule,
+    GridsterModule
   ],
-  providers: [],
+  providers: [{provide: WIDGET_DICTIONARY, useValue: widgetDictionary }],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

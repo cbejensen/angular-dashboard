@@ -10,7 +10,7 @@ import {
   WIDGET_DATA,
 } from './widget-models';
 import { WidgetComponentData } from './widget-models';
-import { WIDGET_COMPONENTS } from './WIDGET_COMPONENTS';
+import { widgetDictionary } from './widget-data';
 
 /**
  * A utility function for creating a widget portal.
@@ -21,8 +21,8 @@ export function createWidgetPortal<Name extends WidgetName>(
   name: Name,
   data?: WidgetComponentData<WidgetName>
 ) {
-  return new ComponentPortal<WidgetComponentInstance<Name>>(
-    WIDGET_COMPONENTS[name] as any, // not sure why `as any` is needed.
+  return new ComponentPortal<unknown>(
+    widgetDictionary[name]['component'] as WidgetComponentType<Name>,
     null,
     data
       ? Injector.create({

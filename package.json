@@ -24,6 +24,7 @@
     "@ngrx/component": "^11.0.1",
     "@ngrx/component-store": "^11.0.1",
     "@ngrx/entity": "^11.0.1",
+    "angular-gridster2": "^11.1.4",
     "ng2-dragula": "^2.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
