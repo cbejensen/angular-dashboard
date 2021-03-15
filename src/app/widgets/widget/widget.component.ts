@@ -3,11 +3,15 @@ import {
   Component,
   ChangeDetectionStrategy,
   Input,
-  HostBinding,
-  Inject,
 } from '@angular/core';
-import { Widget } from '../widget-models';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Widget, WidgetComponentInstance, WidgetName } from '../widget-models';
 import { createWidgetPortal } from '../widget-utils';
+
+export interface UiWidget<Name extends WidgetName = WidgetName> extends Widget<Name> {
+  portal: ComponentPortal<WidgetComponentInstance<Name>>
+}
 
 @Component({
   selector: 'fx-widget',
@@ -25,11 +29,16 @@ export class WidgetComponent {
   }
   private _widget: Widget | undefined;
 
+  private _w: Observable<Widget> = new Subject();
+  w: Observable<UiWidget> = this._w.pipe(
+    map(widget => ({...widget, portal: createWidgetPortal(widget?.name, widget?.data)}))
+  )
+
   @Input() editing: boolean = false;
 
   portal: ComponentPortal<unknown> | undefined;
 
-  // constructor(@Inject(WIDGET_DICTIONARY) private widgetDictionary: {}) {}
+  constructor() {}
 
   private _handleWidgetUpdate(widget: Widget | undefined) {
     if (!widget) {
@@ -37,7 +46,6 @@ export class WidgetComponent {
       return;
     }
     this.portal = createWidgetPortal(widget.name, widget.data);
-    // this.label = this.widgetDictionary[widget.name].label;
   }
 
 }

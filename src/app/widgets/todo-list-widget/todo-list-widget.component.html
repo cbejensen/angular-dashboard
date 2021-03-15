@@ -1,4 +1,3 @@
-<h1>{{ data?.title || 'To Do List' }}</h1>
 <ul>
   <li *ngFor="let item of items | async">{{ item }}</li>
   <li><button (click)="addItem()">+ Add Item</button></li>

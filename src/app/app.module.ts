@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {PortalModule} from '@angular/cdk/portal';
 import { ReactiveComponentModule } from '@ngrx/component';
-import { DragulaModule } from 'ng2-dragula';
 import { GridsterModule } from 'angular-gridster2';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,8 +21,6 @@ import { TodoListWidgetComponent } from './widgets/todo-list-widget/todo-list-wi
 import { DashboardComponent } from './dashboard/ui/dashboard/dashboard.component';
 import { WidgetDirective } from './widgets/directives';
 import { DashboardPageComponent } from './dashboard/dashboard-page/dashboard-page.component';
-import { WIDGET_DICTIONARY } from './widgets/widget-models';
-import { widgetDictionary } from './widgets/widget-data';
 
 @NgModule({
   declarations: [
@@ -52,7 +49,6 @@ import { widgetDictionary } from './widgets/widget-data';
     ReactiveComponentModule,
     GridsterModule
   ],
-  providers: [{provide: WIDGET_DICTIONARY, useValue: widgetDictionary }],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

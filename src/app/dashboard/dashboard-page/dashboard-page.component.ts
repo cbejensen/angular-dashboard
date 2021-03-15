@@ -8,7 +8,7 @@ import { WidgetService } from 'src/app/widgets/widget.service';
 })
 export class DashboardPageComponent {
 
-  widgets = this.widgetService.getAllWidgets();
+  widgets = this.widgetService.getUserWidgets();
 
   constructor(private widgetService: WidgetService) { }
 

@@ -3,7 +3,7 @@
 </fx-widget-list> -->
 
 <gridster [options]="options">
-  <gridster-item *ngFor="let widget of widgets | async" [item]="widget.coordinates" class="mat-elevation-z2">
+  <gridster-item *ngFor="let widget of widgets | async" [item]="widget.gridArea" class="mat-elevation-z2">
     <fx-widget [widget]="widget"></fx-widget>
   </gridster-item>
 </gridster>
