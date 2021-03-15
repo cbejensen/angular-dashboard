@@ -18,7 +18,7 @@ import { NumberWidgetComponent } from './widgets/number-widget/number-widget.com
 import { DashboardWidgetListComponent } from './dashboard/dashboard-widget-list/dashboard-widget-list.component';
 import { DashboardHeaderUiComponent } from './dashboard/ui/dashboard-header-ui/dashboard-header-ui.component';
 import { TodoListWidgetComponent } from './widgets/todo-list-widget/todo-list-widget.component';
-import { DashboardComponent } from './dashboard/ui/dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { WidgetDirective } from './widgets/directives';
 import { DashboardPageComponent } from './dashboard/dashboard-page/dashboard-page.component';
 

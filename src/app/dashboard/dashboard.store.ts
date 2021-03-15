@@ -47,10 +47,13 @@ export class DashboardStore extends ComponentStore<DashboardState> {
     editing,
   }));
 
-  readonly toggleEditing = this.updater((state) => ({
-    ...state,
-    editing: !state.editing,
-  }));
+  readonly toggleEditing = this.updater((state) => {
+    console.log(!state.editing)
+    return ({
+      ...state,
+      editing: !state.editing,
+    });
+  });
 
   readonly setAllWidgets = this.updater((state, widgets: Widget[]) =>
     entityAdapter.setAll(widgets, state)

@@ -29,12 +29,12 @@ export class WidgetComponent {
   }
   private _widget: Widget | undefined;
 
+  @Input() editing = false;
+
   private _w: Observable<Widget> = new Subject();
   w: Observable<UiWidget> = this._w.pipe(
     map(widget => ({...widget, portal: createWidgetPortal(widget?.name, widget?.data)}))
   )
-
-  @Input() editing: boolean = false;
 
   portal: ComponentPortal<unknown> | undefined;
 

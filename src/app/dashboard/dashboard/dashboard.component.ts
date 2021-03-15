@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ContentChild, ViewEncapsulation, Input } from '@angular/core';
-import { DashboardStore } from '../../dashboard.store';
+import { DashboardStore } from '../dashboard.store';
 
 @Component({
   selector: 'fx-dashboard',
