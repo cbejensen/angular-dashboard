@@ -3,6 +3,7 @@ import {
   Component,
   ChangeDetectionStrategy,
   Input,
+  HostBinding,
 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -29,7 +30,7 @@ export class WidgetComponent {
   }
   private _widget: Widget | undefined;
 
-  @Input() editing = false;
+  @Input() @HostBinding('class.editing') editing = false;
 
   private _w: Observable<Widget> = new Subject();
   w: Observable<UiWidget> = this._w.pipe(

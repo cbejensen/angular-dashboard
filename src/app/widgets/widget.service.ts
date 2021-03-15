@@ -79,7 +79,7 @@ const DEFAULT_USER_WIDGETS: Widget[] = [
       x: 4,
       y: 1,
       cols: 1,
-      rows: 4
+      rows: 3
     }
   },
 ]

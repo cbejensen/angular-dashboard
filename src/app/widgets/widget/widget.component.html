@@ -1,6 +1,6 @@
 <mat-card *ngIf="widget && portal">
   <mat-card-title *ngIf="widget.label as label">{{ label }}</mat-card-title>
-  <div class="mat-card-content">
+  <mat-card-content>
     <ng-template [cdkPortalOutlet]="portal"></ng-template>
-  </div>
+  </mat-card-content>
 </mat-card>

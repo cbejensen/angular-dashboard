@@ -10,12 +10,25 @@
   }
 }
 
+:host(.editing) {
+  cursor: move;
+  .mat-card-content {
+    pointer-events: none;
+  }
+}
+
+.mat-card {
+  display: flex;
+  flex-direction: column;
+}
+
 .mat-card-title {
   font-size: 1rem;
 }
 
 .mat-card-content {
-  &, & > ::ng-deep * {
+  flex: 1;
+  ::ng-deep > * {
     height: 100%;
   }
 }

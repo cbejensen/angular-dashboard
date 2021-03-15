@@ -1,9 +1,9 @@
-import { Component, ChangeDetectionStrategy, Input, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { map, startWith, takeUntil, tap } from 'rxjs/operators';
+import { Component, ChangeDetectionStrategy, Input, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { tap } from 'rxjs/operators';
 import { Widget } from 'src/app/widgets/widget-models';
 import { DashboardStore } from '../dashboard.store';
 import { GridsterConfig } from 'angular-gridster2';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 const defaultConfig: GridsterConfig = {
   resizable: { enabled: false },
@@ -34,7 +34,7 @@ const editingConfig: GridsterConfig = {
   styleUrls: ['./dashboard-widget-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardWidgetListComponent implements OnInit, OnDestroy {
+export class DashboardWidgetListComponent implements OnDestroy {
   
   private _config: GridsterConfig = defaultConfig;
   public get config(): GridsterConfig {
@@ -61,13 +61,6 @@ export class DashboardWidgetListComponent implements OnInit, OnDestroy {
   private _destroyed = new Subject();
 
   constructor(private store: DashboardStore, private cd: ChangeDetectorRef) {}
-
-  ngOnInit() {
-    // this.store.editing.pipe(takeUntil(this._destroyed)).subscribe(editing => {
-    //   this._config.next(editing ? editingConfig : defaultConfig);
-    //   this.cd.detectChanges();
-    // })
-  }
 
   ngOnDestroy(): void {
     this._destroyed.next();
