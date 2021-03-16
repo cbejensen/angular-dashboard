@@ -1,32 +1,10 @@
-import { Component, ChangeDetectionStrategy, Input, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnDestroy, ChangeDetectorRef, HostBinding } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { Widget } from 'src/app/widgets/widget-models';
 import { DashboardStore } from '../dashboard.store';
-import { GridsterConfig } from 'angular-gridster2';
+import { GridsterConfig, GridsterItem } from 'angular-gridster2';
 import { Subject } from 'rxjs';
-
-const defaultConfig: GridsterConfig = {
-  resizable: { enabled: false },
-  draggable: { enabled: false },
-  itemChangeCallback: undefined,
-  displayGrid: 'none',
-  pushItems: true,
-  compactType: 'compactUp',
-  gridType: 'verticalFixed',
-  fixedColWidth: 200,
-  fixedRowWidth: 200,
-  margin: 16,
-  outerMargin: false,
-};
-
-const editingConfig: GridsterConfig = {
-  resizable: { enabled: true },
-  draggable: { enabled: true },
-  itemChangeCallback: (i, g) => {
-    console.log(i, g);
-  },
-  displayGrid: 'always'
-}
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'fx-dashboard-widget-list',
@@ -36,21 +14,19 @@ const editingConfig: GridsterConfig = {
 })
 export class DashboardWidgetListComponent implements OnDestroy {
   
-  private _config: GridsterConfig = defaultConfig;
-  public get config(): GridsterConfig {
-    return this._config;
-  }
-  public set config(config: GridsterConfig) {
-    this._config = config;
-    config.api?.optionsChanged?.();
-    this.cd.detectChanges();
-  }
+  config: GridsterConfig = {
+    pushItems: true,
+    compactType: 'compactUp',
+    gridType: 'verticalFixed',
+    margin: 16,
+  };
 
   widgets = this.store.allWidgets;
 
   editing = this.store.editing.pipe(
     tap(editing => {
-      this.config = editing ? editingConfig : defaultConfig;
+      this._editing = editing;
+      this._updateConfig(editing);
     }),
   );
 
@@ -58,12 +34,36 @@ export class DashboardWidgetListComponent implements OnDestroy {
     this.store.setAllWidgets(widgets || []);
   }
 
+  @HostBinding('class.editing') private _editing = false;
+
   private _destroyed = new Subject();
 
-  constructor(private store: DashboardStore, private cd: ChangeDetectorRef) {}
+  constructor(private store: DashboardStore, private cd: ChangeDetectorRef, private dialog: MatDialog) {}
+
+  ngOnInit() {
+    this.config.emptyCellClickCallback = (_, gridArea) => {
+      console.log(gridArea);
+    }
+  }
 
   ngOnDestroy(): void {
     this._destroyed.next();
     this._destroyed.complete();
+  }
+
+  private _updateConfig(editing: boolean) {
+    this.config.resizable = { enabled: editing }
+    this.config.draggable = { enabled: editing }
+    this.config.displayGrid = editing ? 'always' : 'none';
+    this.config.enableEmptyCellClick = editing;
+    this.config.emptyCellClickCallback = editing ? this._emptyCellClickCallback : undefined;
+    // Tell Gridster the config has changed.
+    this.config.api?.optionsChanged?.();
+    // Tell Angular the view should update.
+    this.cd.detectChanges();
+  }
+
+  private _emptyCellClickCallback(_: MouseEvent, item: GridsterItem) {
+    // this.dialog.open()
   }
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {PortalModule} from '@angular/cdk/portal';
+import { PortalModule } from '@angular/cdk/portal';
 import { ReactiveComponentModule } from '@ngrx/component';
 import { GridsterModule } from 'angular-gridster2';
 
@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 import { DashboardHeaderComponent } from './dashboard/dashboard-header/dashboard-header.component';
 import { DashboardHeaderDirective, DashboardWidgetListDirective } from './dashboard/directives';
 import { WidgetListComponent } from './widgets/widget-list/widget-list.component';
@@ -45,6 +47,8 @@ import { DashboardPageComponent } from './dashboard/dashboard-page/dashboard-pag
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
     PortalModule,
     ReactiveComponentModule,
     GridsterModule

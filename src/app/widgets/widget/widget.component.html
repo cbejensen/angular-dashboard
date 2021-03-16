@@ -3,4 +3,5 @@
   <mat-card-content>
     <ng-template [cdkPortalOutlet]="portal"></ng-template>
   </mat-card-content>
+  <button *ngIf="editing" mat-mini-fab class="edit-button" (click)="edit()"><mat-icon>edit</mat-icon></button>
 </mat-card>

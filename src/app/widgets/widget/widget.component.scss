@@ -11,7 +11,6 @@
 }
 
 :host(.editing) {
-  cursor: move;
   .mat-card-content {
     pointer-events: none;
   }
@@ -28,7 +27,16 @@
 
 .mat-card-content {
   flex: 1;
+  margin-bottom: 0;
   ::ng-deep > * {
     height: 100%;
+    width: 100%;
+    position: relative;
   }
+}
+
+.edit-button {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
 }

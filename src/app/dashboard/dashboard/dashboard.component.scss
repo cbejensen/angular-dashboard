@@ -4,12 +4,13 @@
   height: 100vh;
 }
 
-::ng-deep {
-  .fx-dashboard-header, .fx-dashboard-widget-list {
-    padding: 1rem;
-  }
-  .fx-dashboard-widget-list {
-    background: #5d5d5d;
-    flex: 1;
-  }
+.content {
+  background: #5d5d5d;
+  flex: 1;
+  overflow: auto;
 }
+
+::ng-deep .fx-dashboard-header {
+  padding: 1rem;
+}
+

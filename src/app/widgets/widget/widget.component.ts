@@ -1,13 +1,16 @@
-import { ComponentPortal } from '@angular/cdk/portal';
+import { CdkPortal, CdkPortalOutlet, CdkPortalOutletAttachedRef, ComponentPortal } from '@angular/cdk/portal';
 import {
   Component,
   ChangeDetectionStrategy,
   Input,
   HostBinding,
+  ContentChild,
+  ViewChild,
+  ComponentRef,
 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Widget, WidgetComponentInstance, WidgetName } from '../widget-models';
+import { AbstractWidgetComponent, Widget, WidgetComponentInstance, WidgetName } from '../widget-models';
 import { createWidgetPortal } from '../widget-utils';
 
 export interface UiWidget<Name extends WidgetName = WidgetName> extends Widget<Name> {
@@ -32,12 +35,13 @@ export class WidgetComponent {
 
   @Input() @HostBinding('class.editing') editing = false;
 
-  private _w: Observable<Widget> = new Subject();
-  w: Observable<UiWidget> = this._w.pipe(
-    map(widget => ({...widget, portal: createWidgetPortal(widget?.name, widget?.data)}))
-  )
+  @ViewChild(CdkPortalOutlet) cdkPortalOutlet: CdkPortalOutlet | undefined;
 
   portal: ComponentPortal<unknown> | undefined;
+
+  private get portalComponentInstance(): AbstractWidgetComponent | undefined {
+    return (this.cdkPortalOutlet?.attachedRef as ComponentRef<AbstractWidgetComponent>)?.instance;
+  }
 
   constructor() {}
 
@@ -47,6 +51,10 @@ export class WidgetComponent {
       return;
     }
     this.portal = createWidgetPortal(widget.name, widget.data);
+  }
+
+  edit() {
+    console.log(this.portalComponentInstance);
   }
 
 }
