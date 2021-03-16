@@ -12,17 +12,25 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DashboardHeaderComponent } from './dashboard/dashboard-header/dashboard-header.component';
-import { DashboardHeaderDirective, DashboardWidgetListDirective } from './dashboard/directives';
-import { WidgetListComponent } from './widgets/widget-list/widget-list.component';
+import {
+  DashboardHeaderDirective,
+  DashboardWidgetListDirective,
+} from './dashboard/directives';
+import { DashboardWidgetsComponent } from './dashboard/dashboard-widgets/dashboard-widgets.component';
 import { WidgetComponent } from './widgets/widget/widget.component';
 import { HelloWorldWidgetComponent } from './widgets/hello-world-widget/hello-world-widget.component';
 import { NumberWidgetComponent } from './widgets/number-widget/number-widget.component';
-import { DashboardWidgetListComponent } from './dashboard/dashboard-widget-list/dashboard-widget-list.component';
+import { WidgetGridComponent } from './widgets/widget-grid/widget-grid.component';
 import { DashboardHeaderUiComponent } from './dashboard/ui/dashboard-header-ui/dashboard-header-ui.component';
 import { TodoListWidgetComponent } from './widgets/todo-list-widget/todo-list-widget.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { WidgetDirective } from './widgets/directives';
 import { DashboardPageComponent } from './dashboard/dashboard-page/dashboard-page.component';
+import { AddWidgetDialogComponent } from './widgets/add-widget-dialog/add-widget-dialog.component';
+import {
+  WIDGET_COMPONENTS,
+  WIDGET_COMPONENTS_TOKEN,
+} from './widgets/WIDGET_COMPONENTS';
 
 @NgModule({
   declarations: [
@@ -31,15 +39,16 @@ import { DashboardPageComponent } from './dashboard/dashboard-page/dashboard-pag
     DashboardHeaderComponent,
     DashboardHeaderDirective,
     DashboardWidgetListDirective,
-    DashboardWidgetListComponent,
     DashboardHeaderUiComponent,
-    WidgetListComponent,
+    WidgetGridComponent,
     WidgetComponent,
     HelloWorldWidgetComponent,
     NumberWidgetComponent,
     TodoListWidgetComponent,
     WidgetDirective,
-    DashboardPageComponent
+    DashboardPageComponent,
+    DashboardWidgetsComponent,
+    AddWidgetDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,8 +60,11 @@ import { DashboardPageComponent } from './dashboard/dashboard-page/dashboard-pag
     MatDialogModule,
     PortalModule,
     ReactiveComponentModule,
-    GridsterModule
+    GridsterModule,
+  ],
+  providers: [
+    { provide: WIDGET_COMPONENTS_TOKEN, useValue: WIDGET_COMPONENTS },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

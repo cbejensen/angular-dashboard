@@ -7,34 +7,32 @@ const helloWorldWidgetMeta: WidgetMeta<'HELLO_WORLD'> = {
   name: 'HELLO_WORLD',
   label: 'Hello World',
   deprecated: false,
-  data: {
-    name: 'YOUR NAME HERE'
-  }
 }
 
 const numberWidgetMeta: WidgetMeta<'NUMBER'> = {
   name: 'NUMBER',
   label: 'Number',
   deprecated: false,
-  data: {
-    label: 'Unread',
-    number: 12,
-  }
 }
 
 const todoListWidgetMeta: WidgetMeta<'TODO_LIST'> = {
   name: 'TODO_LIST',
   label: 'To-Do List',
   deprecated: false,
-  data: {
-    items: ['Contact Ashley', 'File report']
-  }
+}
+
+// For testing
+const deprecatedWidgetMeta = {
+  name: 'HELLO_WORLD' as WidgetName,
+  label: 'Deprecated',
+  deprecated: true
 }
 
 const WIDGET_META: WidgetMeta[]  = [
   helloWorldWidgetMeta,
   numberWidgetMeta,
-  todoListWidgetMeta
+  todoListWidgetMeta,
+  deprecatedWidgetMeta
 ]
 
 const DEFAULT_USER_WIDGETS: Widget[] = [

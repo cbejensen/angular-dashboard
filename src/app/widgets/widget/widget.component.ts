@@ -1,15 +1,12 @@
-import { CdkPortal, CdkPortalOutlet, CdkPortalOutletAttachedRef, ComponentPortal } from '@angular/cdk/portal';
+import { CdkPortalOutlet, ComponentPortal } from '@angular/cdk/portal';
 import {
   Component,
   ChangeDetectionStrategy,
   Input,
   HostBinding,
-  ContentChild,
   ViewChild,
   ComponentRef,
 } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { AbstractWidgetComponent, Widget, WidgetComponentInstance, WidgetName } from '../widget-models';
 import { createWidgetPortal } from '../widget-utils';
 

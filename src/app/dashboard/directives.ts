@@ -7,7 +7,7 @@ import { Directive } from "@angular/core";
 export class DashboardHeaderDirective {};
 
 @Directive({
-  selector: 'fx-dashboard-widget-list, [fx-dashboard-widget-list], [fxDashboardwidget-list]',
-  host: { class: 'fx-dashboard-widget-list' }
+  selector: 'fx-widget-grid, [fx-widget-grid], [fxDashboardwidget-grid]',
+  host: { class: 'fx-widget-grid' }
 })
 export class DashboardWidgetListDirective {};

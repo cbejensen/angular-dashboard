@@ -1,5 +1,5 @@
 import { InjectionToken, TemplateRef } from '@angular/core';
-import { widgetComponents } from './widget-data';
+import { WIDGET_COMPONENTS } from './WIDGET_COMPONENTS';
 import { GridsterItem } from 'angular-gridster2';
 
 // REMOVE ME
@@ -10,13 +10,6 @@ interface MetaEntity {
 }
 
 /**
- * The injection token used to provide the mapping of widget names to components.
- */
-export const WIDGET_COMPONENTS = new InjectionToken<typeof widgetComponents>(
-  'WIDGET_COMPONENTS'
-);
-
-/**
  * The injection token used to provide abstract data to a widget component.
  */
 export const WIDGET_DATA = new InjectionToken<WidgetData>('WIDGET_DATA');
@@ -24,7 +17,7 @@ export const WIDGET_DATA = new InjectionToken<WidgetData>('WIDGET_DATA');
 /**
  * Represents all the unique names for widgets.
  */
-export type WidgetName = keyof typeof widgetComponents;
+export type WidgetName = keyof typeof WIDGET_COMPONENTS;
 
 /**
  * Forces all widget data to be an object. Useful for readability and
@@ -33,12 +26,16 @@ export type WidgetName = keyof typeof widgetComponents;
 export type WidgetData = Record<string, any>;
 
 /**
+ * The coordinates and size of a widget on the grid.
+ */
+export type WidgetGridArea = Pick<GridsterItem, 'x' | 'y' | 'rows' | 'cols'>;
+
+/**
  * Metadata about a particular widget.
  */
 export interface WidgetMeta<Name extends WidgetName = WidgetName>
   extends MetaEntity {
   name: Name;
-  data: WidgetComponentData<Name>
 }
 
 /**
@@ -46,7 +43,7 @@ export interface WidgetMeta<Name extends WidgetName = WidgetName>
  */
 export type WidgetComponentType<
   Name extends WidgetName
-> = typeof widgetComponents[Name]
+> = typeof WIDGET_COMPONENTS[Name]['component']
 
 /**
  * Utility type for getting a widget component instance.
@@ -63,6 +60,13 @@ export type WidgetComponentData<
 > = WidgetComponentInstance<Name> extends { data: WidgetData }
   ? WidgetComponentInstance<Name>['data']
   : undefined;
+
+
+export interface WidgetComponentMetaEntity<Name extends WidgetName> {
+  component: WidgetComponentType<Name>,
+  defaultSize: [number, number],
+  defaultData: WidgetComponentData<Name>
+}
 
 /**
  * Thinks of this as an actual instance of a widget. This is what can be
@@ -82,7 +86,7 @@ export interface Widget<Name extends WidgetName = WidgetName> {
   /**
    * Where this widget should appear on the grid.
    */
-  gridArea: Pick<GridsterItem, 'x' | 'y' | 'rows' | 'cols'>;
+  gridArea: WidgetGridArea;
 
   /**
    * Any abstract data required by this widget's component.

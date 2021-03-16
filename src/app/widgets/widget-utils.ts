@@ -1,17 +1,24 @@
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Injector } from '@angular/core';
+import { HelloWorldWidgetComponent } from './hello-world-widget/hello-world-widget.component';
 import {
   WidgetComponentInstance,
   WidgetName,
   WIDGET_DATA,
 } from './widget-models';
 import { WidgetComponentData } from './widget-models';
-import { widgetComponents } from './widget-data';
+import { WIDGET_COMPONENTS } from './WIDGET_COMPONENTS';
 
+/**
+ * A utility function that gets a component constructor function (not an 
+ * instance) based on a provided name.
+ * @param name The unique widget name that maps to the desired component.
+ * @returns The component constructor function.
+ */
 export function getWidgetComponent<Name extends WidgetName>(
   name: Name
-): typeof widgetComponents[Name] {
-  return widgetComponents[name];
+): typeof WIDGET_COMPONENTS[Name]['component'] {
+  return WIDGET_COMPONENTS[name].component;
 }
 
 /**

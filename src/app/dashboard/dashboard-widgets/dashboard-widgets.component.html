@@ -1,0 +1,5 @@
+<fx-widget-grid
+  [widgets]="(widgets | async)!"
+  [editing]="(editing | async)!"
+  (addWidget)="openWidgetsDialog($event)"
+></fx-widget-grid>

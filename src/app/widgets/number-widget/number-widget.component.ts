@@ -3,7 +3,6 @@ import { AbstractWidgetComponentWithData } from '../widget-models';
 import { WIDGET_DATA } from '../widget-models';
 
 export interface NumberWidgetData {
-  label: string;
   number: number;
 }
 
@@ -14,8 +13,6 @@ export interface NumberWidgetData {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NumberWidgetComponent implements AbstractWidgetComponentWithData<NumberWidgetData> {
-
-  label = 'Number'
 
   constructor(@Inject(WIDGET_DATA) public data: NumberWidgetData) { }
 
