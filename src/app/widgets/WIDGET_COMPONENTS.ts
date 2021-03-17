@@ -27,7 +27,7 @@ export const WIDGET_COMPONENTS = {
   },
   TODO_LIST: <WidgetComponentMeta<TodoListWidgetComponent>>{
     component: TodoListWidgetComponent,
-    defaultGridSize: [1, 3],
+    defaultGridSize: [1, 2],
     defaultData: {
       items: ['Contact Ashley', 'File report'],
     },
@@ -37,7 +37,7 @@ export const WIDGET_COMPONENTS = {
 /**
  * The injection token used to provide abstract data to a widget component.
  */
- export const WIDGET_COMPONENTS_TOKEN = new InjectionToken<WidgetComponents>(
+export const WIDGET_COMPONENTS_TOKEN = new InjectionToken<WidgetComponents>(
   'WIDGET_COMPONENTS_TOKEN'
 );
 

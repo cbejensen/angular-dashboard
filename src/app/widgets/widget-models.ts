@@ -10,6 +10,13 @@ interface MetaEntity {
 }
 
 /**
+ * The injection token used to provide a mobile breakpoint for the grid.
+ */
+export const WIDGET_GRID_BREAKPOINT = new InjectionToken<number>(
+  'WIDGET_GRID_BREAKPOINT'
+);
+
+/**
  * The injection token used to provide abstract data to a widget component.
  */
 export const WIDGET_DATA = new InjectionToken<WidgetData>('WIDGET_DATA');
@@ -43,7 +50,7 @@ export interface WidgetMeta<Name extends WidgetName = WidgetName>
  */
 export type WidgetComponentType<
   Name extends WidgetName
-> = typeof WIDGET_COMPONENTS[Name]['component']
+> = typeof WIDGET_COMPONENTS[Name]['component'];
 
 /**
  * Utility type for getting a widget component instance.
@@ -61,16 +68,15 @@ export type WidgetComponentData<
   ? WidgetComponentInstance<Name>['data']
   : undefined;
 
-
 export interface WidgetComponentMetaEntity<Name extends WidgetName> {
-  component: WidgetComponentType<Name>,
-  defaultSize: [number, number],
-  defaultData: WidgetComponentData<Name>
+  component: WidgetComponentType<Name>;
+  defaultSize: [number, number];
+  defaultData: WidgetComponentData<Name>;
 }
 
 /**
- * Thinks of this as an actual instance of a widget. This is what can be
- * updated and saved by the user.
+ * Think of this as an actual instance of a widget. This is what can be updated
+ * and saved by the user.
  */
 export interface Widget<Name extends WidgetName = WidgetName> {
   /**
@@ -97,30 +103,18 @@ export interface Widget<Name extends WidgetName = WidgetName> {
 /**
  * An interface that widget components can implement.
  */
-export interface AbstractWidgetComponent {
-
-  /**
-   * A reference to some UI that allows the user to edit this widget.
-   */
-  settingsTemplate?: TemplateRef<unknown>;
-
-  /**
-   * The ideal number of columns this widget should span.
-   */
-  defaultColumns?: number;
-
-  /**
-   * The ideal number of rows this widget should span.
-   */
-  defaultRows?: number;
-}
-
-/**
- * The interface that widget components with data should implement.
- */
-export interface AbstractWidgetComponentWithData<Data extends WidgetData> extends AbstractWidgetComponent {
+export interface AbstractWidgetComponent<Data extends WidgetData = {}> {
   /**
    * Anything the component needs from an external source.
    */
-  data: Data;
+  data?: Data;
+
+  /**
+   * If this property is present (not undefined), this widget will be considered
+   * mutable. The containing component will then pass down a boolean as an input
+   * with the same name to indicate whether this component should be in edit
+   * mode or not. Because of this, the component should decorate this prop with
+   * as an `@Input()`.
+   */
+  editing?: boolean;
 }

@@ -3,13 +3,8 @@
   height: 100%;
 }
 
-:host(.editing) {
-  ::ng-deep .gridster-column, ::ng-deep .gridster-row {
-    cursor: copy;
-  }
-  fx-widget {
-    cursor: move;
-  }
+:host(.editing) fx-widget {
+  cursor: move;
 }
 
 gridster, gridster-item {
@@ -19,8 +14,6 @@ gridster, gridster-item {
 
 $border-style: dashed;
 $border-color: #ffffff45;
-
-
 
 ::ng-deep gridster .gridster-column.gridster-column {
   border-left-style: $border-style;

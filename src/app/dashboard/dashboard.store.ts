@@ -1,102 +1,85 @@
 import { Injectable } from '@angular/core';
-import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { createEntityAdapter } from '@ngrx/entity';
+import { MatDialog } from '@angular/material/dialog';
+import { ComponentStore } from '@ngrx/component-store';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { Widget, WidgetMeta } from '../widgets/widget-models';
-import { DashboardState } from './dashboard-models';
+import { filter, switchMap, tap } from 'rxjs/operators';
+import { AddWidgetDialogComponent } from '../widgets/add-widget-dialog/add-widget-dialog.component';
+import { Widget, WidgetGridArea } from '../widgets/widget-models';
 
-export const entityAdapter = createEntityAdapter<WidgetMeta>({
-  selectId: (widget) => widget.name,
-});
-
-export const initialState = entityAdapter.getInitialState();
-
-export const { selectAll, selectEntities } = entityAdapter.getSelectors();
+export interface DashboardState {
+  widgets: Widget[];
+  // editing: boolean;
+}
 
 @Injectable()
 export class DashboardStore extends ComponentStore<DashboardState> {
-  readonly editing = this.select((state) => state.editing);
+  readonly widgets = this.select((state) => state.widgets);
 
-  readonly allWidgets = this.select((state) => selectAll(state));
-
-  readonly allWidgetEntities = this.select((state) => selectEntities(state));
-
-  readonly selectedWidgets = this.select((state) => state.selectedWidgets);
-
-  constructor() {
-    super(
-      entityAdapter.getInitialState({
-        selectedWidgets: [],
-        editing: false,
-      })
-    );
+  constructor(private dialog: MatDialog) {
+    super({
+      widgets: [],
+    });
   }
 
-  readonly setEditing = this.updater((state, editing: boolean) => ({
+  // readonly setEditing = this.updater((state, editing: boolean) => ({
+  //   ...state,
+  //   editing,
+  // }));
+
+  // readonly toggleEditing = this.updater((state) => {
+  //   console.log(!state.editing);
+  //   return {
+  //     ...state,
+  //     editing: !state.editing,
+  //   };
+  // });
+
+  readonly addWidget = this.updater((state, widget: Widget) => ({
     ...state,
-    editing,
-  }));
-
-  readonly toggleEditing = this.updater((state) => {
-    console.log(!state.editing);
-    return {
-      ...state,
-      editing: !state.editing,
-    };
-  });
-
-  readonly setPresetWidgets = this.updater((state, widgets: WidgetMeta[]) =>
-    entityAdapter.setAll(widgets, state)
-  );
-
-  readonly selectWidget = this.updater((state, widget: Widget) => ({
-    ...state,
-    selectedWidgets: [...state.selectedWidgets, widget],
+    widgets: [...state.widgets, widget],
   }));
 
   readonly removeWidget = this.updater((state, index: number) => ({
     ...state,
-    selectedWidgets: state.selectedWidgets.filter((_, i) => i !== index),
+    widgets: state.widgets.filter((_, i) => i !== index),
   }));
 
   // Should only be called by the corresponding effect below.
-  private readonly _setSelectedWidgets = this.updater(
-    (state, selectedWidgets: Widget[]) =>
-      entityAdapter.upsertMany(
-        selectedWidgets.map(({ name, label }) => ({
-          name,
-          label,
-          deprecated: false,
-        })),
-        {
-          ...state,
-          selectedWidgets,
-        }
-      )
-  );
+  private readonly _setWidgets = this.updater((state, widgets: Widget[]) => ({
+    ...state,
+    widgets,
+  }));
 
   // EFFECTS -------------------------------------------------------------------
 
-  readonly setSelectedWidgets = this.effect(
-    (selectedWidgets: Observable<Widget[]>) => {
-      return selectedWidgets.pipe(
-        tap((widgets) => {
-          localStorage.setItem('widgets', JSON.stringify(widgets));
-          this._setSelectedWidgets(widgets);
-        })
+  readonly setWidgets = this.effect((widgets: Observable<Widget[]>) => {
+    return widgets.pipe(
+      tap((widgets) => {
+        localStorage.setItem('widgets', JSON.stringify(widgets));
+        this._setWidgets(widgets);
+      })
+    );
+  });
+
+  readonly openAddWidgetDialog = this.effect(
+    (coords: Observable<Pick<WidgetGridArea, 'x' | 'y'> | undefined>) => {
+      return coords.pipe(
+        switchMap(
+          ({ x, y }: Pick<WidgetGridArea, 'x' | 'y'> = { x: 0, y: 0 }) =>
+            this.dialog
+              .open(AddWidgetDialogComponent)
+              .afterClosed()
+              .pipe(
+                filter((widget: Widget) => !!widget),
+                tap((widget) =>
+                  this.addWidget({
+                    ...widget,
+                    gridArea: { ...widget.gridArea, x, y },
+                  })
+                )
+              )
+        )
       );
     }
   );
-
-  // getAllWidgets = this.effect(() => {
-  //   return this.widgetService.getAllWidgets().pipe(
-  //     tapResponse(
-  //       (widgets) => entityAdapter.setAll(Object.values(widgets), this.get()),
-  //       (error) => {
-  //         console.error(error);
-  //       }
-  //     )
-  //   );
-  // });
 }

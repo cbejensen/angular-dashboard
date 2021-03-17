@@ -6,6 +6,8 @@ import {
   HostBinding,
   ViewChild,
   ComponentRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { AbstractWidgetComponent, Widget, WidgetComponentInstance, WidgetName } from '../widget-models';
 import { createWidgetPortal } from '../widget-utils';
@@ -32,15 +34,25 @@ export class WidgetComponent {
 
   @Input() @HostBinding('class.editing') editing = false;
 
+  @Output() edit = new EventEmitter();
+
   @ViewChild(CdkPortalOutlet) cdkPortalOutlet: CdkPortalOutlet | undefined;
 
   portal: ComponentPortal<unknown> | undefined;
 
-  private get portalComponentInstance(): AbstractWidgetComponent | undefined {
+  mutable = false;
+
+  private get widgetComponentInstance(): AbstractWidgetComponent | undefined {
     return (this.cdkPortalOutlet?.attachedRef as ComponentRef<AbstractWidgetComponent>)?.instance;
   }
 
   constructor() {}
+
+  ngAfterViewInit() {
+    if (this.widgetComponentInstance?.editing !== undefined) {
+      this.mutable = true;
+    }
+  }
 
   private _handleWidgetUpdate(widget: Widget | undefined) {
     if (!widget) {
@@ -48,10 +60,6 @@ export class WidgetComponent {
       return;
     }
     this.portal = createWidgetPortal(widget.name, widget.data);
-  }
-
-  edit() {
-    console.log(this.portalComponentInstance);
   }
 
 }

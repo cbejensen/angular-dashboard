@@ -1,33 +1,21 @@
+$background: #fff;
+$padding: 1rem;
+
 :host {
+  background: $background;
+  padding: $padding $padding;
+  height: calc(100% - #{2 * $padding});
+  width: calc(100% - #{2 * $padding});
   display: flex;
-  height: 100%;
-  width: 100%;
-  .mat-card {
-    flex: 1;
-  }
+  flex-direction: column;
   &:empty {
     display: none;
   }
 }
 
-:host(.editing) {
-  .mat-card-content {
-    pointer-events: none;
-  }
-}
-
-.mat-card {
-  display: flex;
-  flex-direction: column;
-}
-
-.mat-card-title {
-  font-size: 1rem;
-}
-
-.mat-card-content {
+.content {
   flex: 1;
-  margin-bottom: 0;
+  overflow: auto;
   ::ng-deep > * {
     height: 100%;
     width: 100%;
@@ -35,8 +23,42 @@
   }
 }
 
-.edit-button {
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  :host:hover & {
+    margin-right: $padding / 4;
+  }
+}
+
+.actions {
+  background: $background;
+  display: flex;
+  align-items: center;
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+  top: 0;
+  right: 0;
+  padding: $padding / 4;
+  gap: $padding / 4;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 100ms, transform 200ms;
+  :host:hover & {
+    opacity: 1;
+    transform: none;
+    transition: opacity 300ms, transform 200ms; 
+  }
+}
+
+.drag-handler {
+  cursor: move;
 }

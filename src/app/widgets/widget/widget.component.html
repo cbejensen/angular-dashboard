@@ -1,7 +1,12 @@
-<mat-card *ngIf="widget && portal">
-  <mat-card-title *ngIf="widget.label as label">{{ label }}</mat-card-title>
-  <mat-card-content>
+<ng-container *ngIf="widget && portal">
+  <div class="header">
+    <span class="title">{{ widget.label }}</span>
+    <div class="actions">
+      <button mat-icon-button aria-label="edit"><mat-icon>edit</mat-icon></button>
+      <mat-icon class="drag-handler" aria-hidden>drag_indicator</mat-icon>
+    </div>
+  </div>
+  <div class="content">
     <ng-template [cdkPortalOutlet]="portal"></ng-template>
-  </mat-card-content>
-  <button *ngIf="editing" mat-mini-fab class="edit-button" (click)="edit()"><mat-icon>edit</mat-icon></button>
-</mat-card>
+  </div>
+</ng-container>

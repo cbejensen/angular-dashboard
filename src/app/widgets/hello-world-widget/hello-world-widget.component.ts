@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject, Optional } from '@angular/core';
-import { AbstractWidgetComponent, AbstractWidgetComponentWithData, WIDGET_DATA } from '../widget-models';
+import { AbstractWidgetComponent, WIDGET_DATA } from '../widget-models';
 
 export interface HelloWorldWidgetData {
   name: string;
@@ -11,7 +11,7 @@ export interface HelloWorldWidgetData {
   styleUrls: ['./hello-world-widget.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HelloWorldWidgetComponent implements AbstractWidgetComponentWithData<HelloWorldWidgetData> {
+export class HelloWorldWidgetComponent implements AbstractWidgetComponent<HelloWorldWidgetData> {
 
   static hello = 'hey'
 

@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, Output, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, HostBinding,} from '@angular/core';
+import { tap } from 'rxjs/operators';
 import { DashboardStore } from '../dashboard.store';
 
 @Component({
@@ -9,10 +10,10 @@ import { DashboardStore } from '../dashboard.store';
 })
 export class DashboardHeaderComponent {
 
-  editing = this.store.editing;
-
   constructor(private store: DashboardStore) { }
 
-  toggleEditing = this.store.toggleEditing;
+  openAddWidgetDialog() {
+    this.store.openAddWidgetDialog(undefined);
+  };
 
 }

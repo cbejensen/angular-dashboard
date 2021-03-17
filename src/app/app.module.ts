@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { PortalModule } from '@angular/cdk/portal';
+import {LayoutModule} from '@angular/cdk/layout';
 import { ReactiveComponentModule } from '@ngrx/component';
 import { GridsterModule } from 'angular-gridster2';
 
@@ -31,6 +32,7 @@ import {
   WIDGET_COMPONENTS,
   WIDGET_COMPONENTS_TOKEN,
 } from './widgets/WIDGET_COMPONENTS';
+import { WIDGET_GRID_BREAKPOINT } from './widgets/widget-models';
 
 @NgModule({
   declarations: [
@@ -61,8 +63,10 @@ import {
     PortalModule,
     ReactiveComponentModule,
     GridsterModule,
+    LayoutModule
   ],
   providers: [
+    { provide: WIDGET_GRID_BREAKPOINT, useValue: 700 },
     { provide: WIDGET_COMPONENTS_TOKEN, useValue: WIDGET_COMPONENTS },
   ],
   bootstrap: [AppComponent],

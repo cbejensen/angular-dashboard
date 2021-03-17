@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, shareReplay } from 'rxjs/operators';
 import { WidgetMeta, Widget, WidgetName } from './widget-models';
 
 const helloWorldWidgetMeta: WidgetMeta<'HELLO_WORLD'> = {
@@ -44,7 +44,7 @@ const DEFAULT_USER_WIDGETS: Widget[] = [
     },
     gridArea: {
       x: 1,
-      y: 1,
+      y: 0,
       cols: 1,
       rows: 1,
     }
@@ -58,8 +58,8 @@ const DEFAULT_USER_WIDGETS: Widget[] = [
     },
     gridArea: {
       x: 1,
-      y: 2,
-      cols: 2,
+      y: 1,
+      cols: 1,
       rows: 1
     }
   },
@@ -74,10 +74,10 @@ const DEFAULT_USER_WIDGETS: Widget[] = [
       ]
     },
     gridArea: {
-      x: 4,
-      y: 1,
+      x: 0,
+      y: 0,
       cols: 1,
-      rows: 3
+      rows: 2
     }
   },
 ]
@@ -87,8 +87,15 @@ const DEFAULT_USER_WIDGETS: Widget[] = [
 })
 export class WidgetService {
 
+  private _widgetMeta = this._fakeFetch(WIDGET_META).pipe(
+    shareReplay({
+      bufferSize: 1,
+      refCount: false
+    })
+  )
+
   getWidgetMeta(): Observable<WidgetMeta[]> {
-    return this._fakeFetch(WIDGET_META)
+    return this._widgetMeta;
   }
 
   getUserWidgets(): Observable<Widget[]> {

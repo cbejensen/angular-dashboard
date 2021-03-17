@@ -2,15 +2,9 @@ import {
   Component,
   ChangeDetectionStrategy,
   Input,
-  OnDestroy,
-  ChangeDetectorRef,
-  HostBinding,
-  Output,
-  EventEmitter,
 } from '@angular/core';
-import { Widget, WidgetGridArea } from 'src/app/widgets/widget-models';
-import { GridsterConfig, GridsterItem } from 'angular-gridster2';
-import { Subject } from 'rxjs';
+import { Widget } from 'src/app/widgets/widget-models';
+import { GridsterConfig } from 'angular-gridster2';
 
 @Component({
   selector: 'fx-widget-grid',
@@ -18,63 +12,21 @@ import { Subject } from 'rxjs';
   styleUrls: ['./widget-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WidgetGridComponent implements OnDestroy {
+export class WidgetGridComponent {
   config: GridsterConfig = {
+    resizable: { enabled: true },
+    draggable: { enabled: true, ignoreContent: true },
     pushItems: true,
     compactType: 'compactUp',
     gridType: 'verticalFixed',
+    fixedRowHeight: 200,
+    maxCols: 4,
     margin: 16,
+    mobileBreakpoint: 700,
+    keepFixedHeightInMobile: true,
+    scrollToNewItems: true,
   };
 
-  @Input()
-  public get widgets(): Widget[] {
-    return this._widgets;
-  }
-  public set widgets(value: Widget[]) {
-    this._widgets = value;
-    console.log(this._widgets);
-  }
-  private _widgets: Widget[] = [];
+  @Input() widgets: Widget[] = [];
 
-  @Input()
-  @HostBinding('class.editing')
-  get editing(): boolean {
-    return this._editing;
-  }
-  set editing(editing: boolean) {
-    this._editing = editing;
-    this._updateConfig(editing);
-  }
-  private _editing = false;
-
-  @Output() addWidget = new EventEmitter<WidgetGridArea>();
-
-  private _destroyed = new Subject();
-
-  constructor(private cd: ChangeDetectorRef) {}
-
-  ngOnInit() {
-    this.config.emptyCellClickCallback = (_, gridArea) => {
-      console.log(gridArea);
-    };
-  }
-
-  ngOnDestroy(): void {
-    this._destroyed.next();
-    this._destroyed.complete();
-  }
-
-  private _updateConfig(editing: boolean) {
-    this.config.resizable = { enabled: editing };
-    this.config.draggable = { enabled: editing };
-    this.config.displayGrid = editing ? 'always' : 'none';
-    this.config.enableEmptyCellClick = editing;
-    this.config.emptyCellClickCallback = editing
-      ? (_, item) => this.addWidget.emit(item)
-      : undefined;
-    // Tell Gridster the config has changed.
-    this.config.api?.optionsChanged?.();
-    // Tell Angular the view should update.
-    this.cd.detectChanges();
-  }
 }

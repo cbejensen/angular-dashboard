@@ -1,4 +1,5 @@
 <ul>
   <li *ngFor="let item of items | async">{{ item }}</li>
   <li><button (click)="addItem()">+ Add Item</button></li>
+  <p *ngIf="editing">Editing!</p>
 </ul>

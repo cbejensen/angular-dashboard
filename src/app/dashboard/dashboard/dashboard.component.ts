@@ -11,9 +11,5 @@ import { DashboardStore } from '../dashboard.store';
 })
 export class DashboardComponent {
 
-  @Input() set editing(editing: boolean) {
-    this.store.setEditing(editing);
-  }
-
   constructor(private store: DashboardStore) {}
 }

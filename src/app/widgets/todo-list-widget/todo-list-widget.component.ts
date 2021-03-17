@@ -5,8 +5,7 @@ import {
   Inject,
 } from '@angular/core';
 import { TodoListService } from 'src/app/todo-list.service';
-import { AbstractWidgetComponentWithData, WIDGET_DATA } from '../widget-models';
-import { AbstractWidgetComponent, WidgetData } from '../widget-models';
+import { AbstractWidgetComponent, WidgetData, WIDGET_DATA } from '../widget-models';
 
 export interface TodoListWidgetData extends WidgetData {
   items: string[]
@@ -20,9 +19,11 @@ export interface TodoListWidgetData extends WidgetData {
   providers: [TodoListService]
 })
 export class TodoListWidgetComponent
-  implements AbstractWidgetComponentWithData<TodoListWidgetData> {
+  implements AbstractWidgetComponent<TodoListWidgetData> {
 
   items = this.todoListService.items;
+
+  editing = false;
 
   constructor(
     @Inject(WIDGET_DATA)
