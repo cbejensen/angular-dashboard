@@ -1,4 +1,3 @@
-<!-- <fx-widget-grid [widgets]="widgets | async" [editing]="false"></fx-widget-grid> -->
 <ul>
   <li *ngFor="let widget of widgets | async" (click)="close(widget)">{{ widget.name }}</li>
 </ul>

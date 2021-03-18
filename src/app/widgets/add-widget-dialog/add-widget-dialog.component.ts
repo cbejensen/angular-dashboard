@@ -18,6 +18,7 @@ import {
   WidgetComponents,
   WIDGET_COMPONENTS_TOKEN,
 } from '../WIDGET_COMPONENTS';
+import { v4 as uuidv4 } from 'uuid';
 
 export type AddWidgetDialogComponentReturnValue = string;
 
@@ -31,20 +32,19 @@ export class AddWidgetDialogComponent {
   widgets = this.widgetService.getWidgetMeta().pipe(
     // TODO: use noDeprecatedPipe?
     map((widgets) => widgets.filter((w) => !w.deprecated)),
-    // Convert widget metadata into something that can be put on a grid.
+    // Convert widget metadata into a widget.
     map<WidgetMeta[], Widget[]>((widgets) =>
       widgets.map(({ name, label }) => {
         const gridSize = this._getDefaultGridArea(name);
         const data = this._getDefaultData(name);
         return {
+          id: uuidv4(),
           name,
           label,
-          gridArea: {
-            x: 0,
-            y: 0,
-            cols: gridSize[0],
-            rows: gridSize[1],
-          },
+          x: 0,
+          y: 0,
+          cols: gridSize[0],
+          rows: gridSize[1],
           data,
         };
       })
@@ -58,7 +58,7 @@ export class AddWidgetDialogComponent {
   ) {}
 
   private _getDefaultGridArea(name: WidgetName): WidgetComponentGridSize {
-    return this.widgetComponents[name]?.defaultGridSize || [1, 'sfd'];
+    return this.widgetComponents[name]?.defaultGridSize || [1, 1];
   }
 
   private _getDefaultData<Name extends WidgetName>(

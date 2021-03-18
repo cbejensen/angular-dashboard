@@ -35,52 +35,6 @@ const WIDGET_META: WidgetMeta[]  = [
   deprecatedWidgetMeta
 ]
 
-const DEFAULT_USER_WIDGETS: Widget[] = [
-  {
-    name: 'HELLO_WORLD',
-    label: 'Hello World',
-    data: {
-      name: 'Christian'
-    },
-    gridArea: {
-      x: 1,
-      y: 0,
-      cols: 1,
-      rows: 1,
-    }
-  },
-  {
-    name: 'NUMBER',
-    label: 'Just some random number',
-    data: {
-      label: 'name',
-      number: Math.floor(Math.random() * 100)
-    },
-    gridArea: {
-      x: 1,
-      y: 1,
-      cols: 1,
-      rows: 1
-    }
-  },
-  {
-    name: 'TODO_LIST',
-    label: 'Shopping List',
-    data: {
-      title: 'Shopping List',
-      items: [
-        'Bread',
-        ''
-      ]
-    },
-    gridArea: {
-      x: 0,
-      y: 0,
-      cols: 1,
-      rows: 2
-    }
-  },
-]
 
 @Injectable({
   providedIn: 'root'
@@ -100,7 +54,7 @@ export class WidgetService {
 
   getUserWidgets(): Observable<Widget[]> {
     const widgets = localStorage.getItem('widgets');
-    return widgets ? this._fakeFetch(JSON.parse(widgets)) : of(DEFAULT_USER_WIDGETS);
+    return widgets ? this._fakeFetch(JSON.parse(widgets)) : of([]);
   }
 
   private _fakeFetch<T>(data: T): Observable<T> {

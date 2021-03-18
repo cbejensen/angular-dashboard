@@ -13,8 +13,6 @@ export interface HelloWorldWidgetData {
 })
 export class HelloWorldWidgetComponent implements AbstractWidgetComponent<HelloWorldWidgetData> {
 
-  static hello = 'hey'
-
   constructor(@Optional() @Inject(WIDGET_DATA) public data: HelloWorldWidgetData) { }
 
 }

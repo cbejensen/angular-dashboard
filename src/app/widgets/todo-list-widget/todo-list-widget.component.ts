@@ -23,8 +23,6 @@ export class TodoListWidgetComponent
 
   items = this.todoListService.items;
 
-  editing = false;
-
   constructor(
     @Inject(WIDGET_DATA)
     public data: TodoListWidgetData,

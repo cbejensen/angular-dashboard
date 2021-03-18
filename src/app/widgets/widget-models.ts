@@ -1,4 +1,4 @@
-import { InjectionToken, TemplateRef } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 import { WIDGET_COMPONENTS } from './WIDGET_COMPONENTS';
 import { GridsterItem } from 'angular-gridster2';
 
@@ -33,9 +33,19 @@ export type WidgetName = keyof typeof WIDGET_COMPONENTS;
 export type WidgetData = Record<string, any>;
 
 /**
+ * The coordinates a widget on the grid.
+ */
+export type WidgetGridCoords = Pick<GridsterItem, 'x' | 'y'>;
+
+/**
+ * The size of a widget on the grid.
+ */
+export type WidgetGridSize = Pick<GridsterItem, 'rows' | 'cols'>;
+
+/**
  * The coordinates and size of a widget on the grid.
  */
-export type WidgetGridArea = Pick<GridsterItem, 'x' | 'y' | 'rows' | 'cols'>;
+export type WidgetGridArea = WidgetGridCoords & WidgetGridSize;
 
 /**
  * Metadata about a particular widget.
@@ -78,9 +88,15 @@ export interface WidgetComponentMetaEntity<Name extends WidgetName> {
  * Think of this as an actual instance of a widget. This is what can be updated
  * and saved by the user.
  */
-export interface Widget<Name extends WidgetName = WidgetName> {
+export interface Widget<Name extends WidgetName = WidgetName> extends WidgetGridArea {
+
   /**
-   * The unique name corresponding to the component that should be rendered.
+   * A unique identifier that belongs to this widget instance only.
+   */
+  id: string;
+
+  /**
+   * The name corresponding to the component that should be rendered.
    */
   name: Name;
 
@@ -88,11 +104,6 @@ export interface Widget<Name extends WidgetName = WidgetName> {
    * The user-friendly text used to identify this widget.
    */
   label: string;
-
-  /**
-   * Where this widget should appear on the grid.
-   */
-  gridArea: WidgetGridArea;
 
   /**
    * Any abstract data required by this widget's component.
@@ -103,18 +114,9 @@ export interface Widget<Name extends WidgetName = WidgetName> {
 /**
  * An interface that widget components can implement.
  */
-export interface AbstractWidgetComponent<Data extends WidgetData = {}> {
+export interface AbstractWidgetComponent<Data extends WidgetData = WidgetData> {
   /**
    * Anything the component needs from an external source.
    */
   data?: Data;
-
-  /**
-   * If this property is present (not undefined), this widget will be considered
-   * mutable. The containing component will then pass down a boolean as an input
-   * with the same name to indicate whether this component should be in edit
-   * mode or not. Because of this, the component should decorate this prop with
-   * as an `@Input()`.
-   */
-  editing?: boolean;
 }

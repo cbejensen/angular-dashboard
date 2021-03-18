@@ -25,9 +25,9 @@
     "@ngrx/component-store": "^11.0.1",
     "@ngrx/entity": "^11.0.1",
     "angular-gridster2": "^11.1.4",
-    "ng2-dragula": "^2.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
+    "uuid": "^3.4.0",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {
@@ -36,6 +36,7 @@
     "@angular/compiler-cli": "~11.2.4",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
+    "@types/uuid": "^8.3.0",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",

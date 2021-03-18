@@ -15,7 +15,7 @@ export const WIDGET_COMPONENTS = {
     component: HelloWorldWidgetComponent,
     defaultGridSize: [1, 1],
     defaultData: {
-      name: 'sdf',
+      name: 'You',
     },
   },
   NUMBER: <WidgetComponentMeta<NumberWidgetComponent>>{

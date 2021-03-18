@@ -21,8 +21,6 @@ import { DashboardWidgetsComponent } from './dashboard/dashboard-widgets/dashboa
 import { WidgetComponent } from './widgets/widget/widget.component';
 import { HelloWorldWidgetComponent } from './widgets/hello-world-widget/hello-world-widget.component';
 import { NumberWidgetComponent } from './widgets/number-widget/number-widget.component';
-import { WidgetGridComponent } from './widgets/widget-grid/widget-grid.component';
-import { DashboardHeaderUiComponent } from './dashboard/ui/dashboard-header-ui/dashboard-header-ui.component';
 import { TodoListWidgetComponent } from './widgets/todo-list-widget/todo-list-widget.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { WidgetDirective } from './widgets/directives';
@@ -41,8 +39,6 @@ import { WIDGET_GRID_BREAKPOINT } from './widgets/widget-models';
     DashboardHeaderComponent,
     DashboardHeaderDirective,
     DashboardWidgetListDirective,
-    DashboardHeaderUiComponent,
-    WidgetGridComponent,
     WidgetComponent,
     HelloWorldWidgetComponent,
     NumberWidgetComponent,

@@ -2,7 +2,7 @@
   <div class="header">
     <span class="title">{{ widget.label }}</span>
     <div class="actions">
-      <button mat-icon-button aria-label="edit"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button (click)="remove.emit()"><mat-icon>delete</mat-icon></button>
       <mat-icon class="drag-handler" aria-hidden>drag_indicator</mat-icon>
     </div>
   </div>

@@ -1,14 +1,14 @@
 import {
   Component,
-  OnInit,
   ChangeDetectionStrategy,
   Input,
+  TrackByFunction,
+  ContentChild,
+  ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
-import { AddWidgetDialogComponent } from 'src/app/widgets/add-widget-dialog/add-widget-dialog.component';
-import { Widget, WidgetGridArea } from 'src/app/widgets/widget-models';
+import { GridsterComponent, GridsterConfig, GridsterItem } from 'angular-gridster2';
+import { Widget } from 'src/app/widgets/widget-models';
+import { WidgetService } from 'src/app/widgets/widget.service';
 import { DashboardStore } from '../dashboard.store';
 
 @Component({
@@ -18,22 +18,40 @@ import { DashboardStore } from '../dashboard.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardWidgetsComponent {
+  @Input('widgets') set setWidgets(widgets: Widget[]) {
+    this.store.setWidgets(widgets || []) 
+  }
+
+  @ViewChild(GridsterComponent) gridsterComponent: GridsterComponent | undefined;
+
   widgets = this.store.widgets;
 
-  @Input('widgets') set setWidgets(widgets: Widget[] | null) {
-    this.store.setWidgets(widgets || []);
+  config: GridsterConfig = {
+    resizable: { enabled: true },
+    draggable: { enabled: true, ignoreContent: true },
+    // @ts-ignore
+    itemChangeCallback: (widget: Widget) => this._updateStore(widget),
+    pushItems: true,
+    compactType: 'compactLeft&Up',
+    gridType: 'verticalFixed',
+    fixedRowHeight: 200,
+    maxCols: 4,
+    margin: 16,
+    mobileBreakpoint: 700,
+    keepFixedHeightInMobile: true,
+    scrollToNewItems: true,
+    // outerMargin: false
+  };
+
+  constructor(private store: DashboardStore) { }
+
+  removeWidget(id: string) {
+    this.store.removeWidget(id);
   }
 
-  private _destroyed = new Subject();
+  trackById: TrackByFunction<Widget> = (index, widget) => widget.id;
 
-  constructor(private store: DashboardStore) {}
-
-  openAddWidgetDialog({ x, y }: WidgetGridArea) {
-    this.store.openAddWidgetDialog({ x, y });
-  }
-
-  ngOnDestroy(): void {
-    this._destroyed.next();
-    this._destroyed.complete();
+  private _updateStore({ id, ...widget }: Widget) {
+    this.store.updateWidget({ id, widget });
   }
 }

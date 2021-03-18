@@ -1,15 +1,12 @@
-import { CdkPortalOutlet, ComponentPortal } from '@angular/cdk/portal';
+import { ComponentPortal } from '@angular/cdk/portal';
 import {
   Component,
   ChangeDetectionStrategy,
   Input,
-  HostBinding,
-  ViewChild,
-  ComponentRef,
-  Output,
   EventEmitter,
+  Output,
 } from '@angular/core';
-import { AbstractWidgetComponent, Widget, WidgetComponentInstance, WidgetName } from '../widget-models';
+import { Widget, WidgetComponentInstance, WidgetName } from '../widget-models';
 import { createWidgetPortal } from '../widget-utils';
 
 export interface UiWidget<Name extends WidgetName = WidgetName> extends Widget<Name> {
@@ -32,27 +29,11 @@ export class WidgetComponent {
   }
   private _widget: Widget | undefined;
 
-  @Input() @HostBinding('class.editing') editing = false;
-
-  @Output() edit = new EventEmitter();
-
-  @ViewChild(CdkPortalOutlet) cdkPortalOutlet: CdkPortalOutlet | undefined;
+  @Output() remove = new EventEmitter();
 
   portal: ComponentPortal<unknown> | undefined;
 
-  mutable = false;
-
-  private get widgetComponentInstance(): AbstractWidgetComponent | undefined {
-    return (this.cdkPortalOutlet?.attachedRef as ComponentRef<AbstractWidgetComponent>)?.instance;
-  }
-
   constructor() {}
-
-  ngAfterViewInit() {
-    if (this.widgetComponentInstance?.editing !== undefined) {
-      this.mutable = true;
-    }
-  }
 
   private _handleWidgetUpdate(widget: Widget | undefined) {
     if (!widget) {

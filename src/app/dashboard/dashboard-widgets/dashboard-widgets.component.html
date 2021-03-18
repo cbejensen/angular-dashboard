@@ -1,3 +1,5 @@
-<fx-widget-grid
-  [widgets]="(widgets | async)!"
-></fx-widget-grid>
+<gridster [options]="config">
+  <gridster-item *ngFor="let widget of widgets | async; trackBy: trackById" [item]="widget" class="mat-elevation-z2">
+    <fx-widget [widget]="widget" (remove)="removeWidget(widget.id)"></fx-widget>
+  </gridster-item>
+</gridster>
